@@ -1,0 +1,33 @@
+{
+  "name": "dmodel",
+  "author": "Kris Zyp",
+  "version": "0.2.1",
+  "description": "A reactive object data modelling library",
+  "licenses": [
+     {
+         "type": "AFLv2.1",
+         "url": "http://trac.dojotoolkit.org/browser/dojo/trunk/LICENSE#L43"
+     },
+     {
+         "type": "BSD",
+         "url": "http://trac.dojotoolkit.org/browser/dojo/trunk/LICENSE#L13"
+     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/SitePen/dstore"
+  },
+  "dependencies": {
+    "dojo": "1.8.6"
+  },
+  "devDependencies": {
+    "intern-geezer": "1.6.*",
+    "dstore": "1.0.0",
+    "json-schema": "0.2.2"
+  },
+  "directories": {
+    "lib": "."
+  },
+  "main": "./Model",
+  "dojoBuild": "package.js"
+}
