@@ -5,21 +5,19 @@ define([
 	'dojo/json',
 	'dojo/_base/declare',
 	'dstore/Memory',
+	'dmodel/Model',
 	'dmodel/store/Validating',
-	'dmodel/extensions/jsonSchema'
-], function (registerSuite, assert, lang, JSON, declare, Memory, Validating, jsonSchema) {
+	'dmodel/validators/NumericValidator'
+], function (registerSuite, assert, lang, JSON, declare, Memory, Model, Validating, NumericValidator) {
 
-	var validatingMemory = (declare([Memory, Validating]))({
-		model: jsonSchema({
-			properties: {
-				prime: {
-					type: 'boolean'
-				},
-				number: {
-					type: 'number',
+	var validatingMemory = new (declare([Memory, Validating]))({
+		model: declare(Model, {
+			schema: {
+				prime: 'boolean',
+				number: new NumericValidator({
 					minimum: 1,
 					maximum: 10
-				},
+				}),
 				name: {
 					type: 'string',
 					required: true
@@ -36,25 +34,14 @@ define([
 	]);
 
 	registerSuite({
-		name: 'dstore validating jsonSchema',
+		name: 'dstore validatingMemory',
 
 		'get': function () {
 			assert.strictEqual(validatingMemory.getSync(1).name, 'one');
 		},
 
-		'model errors': function () {
-			validatingMemory.allowErrors = true;
-			var four = validatingMemory.getSync(4);
-			four.set('number', 33);
-			assert.strictEqual(JSON.stringify(four.property('number').get('errors')), JSON.stringify([
-				{'property': 'number', 'message': 'must have a maximum value of 10'}
-			]));
-			four.set('number', 3);
-			assert.strictEqual(four.property('number').get('errors'), undefined);
-		},
-		
 		'put update': function () {
-			var four = lang.delegate(validatingMemory.getSync(4));
+			var four = lang.delegate(validatingMemory.get(4));
 			four.prime = 'not a boolean';
 			four.number = 34;
 			four.name = 33;
@@ -62,11 +49,28 @@ define([
 				assert.fail('should not pass validation');
 			}, function (validationError) {
 				assert.strictEqual(JSON.stringify(validationError.errors), JSON.stringify([
-					{'property': 'prime', 'message': 'string value found, but a boolean is required'},
-					{'property': 'number', 'message': 'must have a maximum value of 10'},
-					{'property': 'name', 'message': 'number value found, but a string is required'}
+					'not a boolean is not a boolean',
+					'The value is too high',
+					'33 is not a string'
+				]));
+			});
+		},
+		'add update': function () {
+			var four = {
+				prime: 'not a boolean',
+				number: 34,
+				name: 33
+			};
+			return validatingMemory.add(four).then(function () {
+				assert.fail('should not pass validation');
+			}, function (validationError) {
+				assert.strictEqual(JSON.stringify(validationError.errors), JSON.stringify([
+					'not a boolean is not a boolean',
+					'The value is too high',
+					'33 is not a string'
 				]));
 			});
 		}
+
 	});
 });
