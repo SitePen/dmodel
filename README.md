@@ -229,3 +229,9 @@ This would queue up all the notifications that occur before the next event turn,
 ### HiddenProperties Model
 
 The `dmodel/extensions/HiddenProperties` module provides an extension of `dmodel/Model` where all the model properties are stored on a separate objects, rather than the model instance itself. This can provide a couple of advantages. First, model instances can be restored from persistence quicker since, the model instance simply needs to be instantiated with a reference to an existing object, rather than modifying the prototype chain. Second, this can be useful if you wish to protect properties from being directly accessed on the model object. Since the property values are stored on a separate object, this encourages property access through `get`, `set`, and `property`. This can be used as a model for stores, although you may want to use a custom query engine, depending on how you want property access to function during querying.
+
+## Stores
+
+### Validating
+
+The `dmodel/store/Validating` module is a store mixin that adds functionality for validating any objects that are saved through `put()` or `add()`. The validation relies on the `Model` for the objects, so any property constraints that should be applied should be defined on the model's schema. If validation fails on `put()` or `add()` than a validation `TypeError` will be thrown, with an `errors` property that lists any validation errors.
