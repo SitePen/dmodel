@@ -10,7 +10,7 @@ define([
 ], function (registerSuite, assert, lang, JSON, declare, Memory, Validating, jsonSchema) {
 
 	var validatingMemory = (declare([Memory, Validating]))({
-		model: jsonSchema({
+		Model: jsonSchema({
 			properties: {
 				prime: {
 					type: 'boolean'

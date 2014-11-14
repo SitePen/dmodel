@@ -426,7 +426,7 @@ define([
 				data: [
 					{id: 1, num: 1, str: 'hi', bool: true}
 				],
-				model: declare(Model, {
+				Model: declare(Model, {
 					schema: {
 						str: {
 							type: 'string',

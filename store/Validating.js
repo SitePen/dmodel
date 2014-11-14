@@ -12,7 +12,7 @@ define(['dstore/Store', 'dojo/when', 'dojo/_base/declare'], function (Store, whe
 			//		The object to validate
 			//	isNew: Boolean
 			//		Indicates whether or not to assume the object is new or not
-			if (!(object instanceof this.model)) {
+			if (!(object instanceof this.Model)) {
 				object = this._restore(object);
 			}
 			return when(object.validate()).then(function (isValid) {

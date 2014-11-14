@@ -11,7 +11,7 @@ define([
 ], function (registerSuite, assert, lang, JSON, declare, Memory, Model, Validating, NumericValidator) {
 
 	var validatingMemory = new (declare([Memory, Validating]))({
-		model: declare(Model, {
+		Model: declare(Model, {
 			schema: {
 				prime: 'boolean',
 				number: new NumericValidator({

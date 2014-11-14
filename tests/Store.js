@@ -20,19 +20,19 @@ define([
 					{ id: 4, name: 'four', even: true, prime: false, mappedTo: null },
 					{ id: 5, name: 'five', prime: true, mappedTo: 'A' }
 				],
-				model: Model,
+				Model: Model,
 				filterFunction: function (object) {
 					return object.name === 'two';
 				}
 			});
 
 			// add a method to the model prototype
-			store.model.prototype.describe = function () {
+			store.Model.prototype.describe = function () {
 				return this.name + ' is ' + (this.prime ? '' : 'not ') + 'a prime';
 			};
 		},
 
-		'model': function () {
+		'Model': function () {
 			assert.strictEqual(store.getSync(1).describe(), 'one is not a prime');
 			assert.strictEqual(store.getSync(3).describe(), 'three is a prime');
 			assert.strictEqual(store.filter({even: true}).fetchSync()[1].describe(), 'four is not a prime');
