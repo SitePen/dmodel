@@ -42,8 +42,7 @@ define(['../Property', '../Model', 'dojo/_base/declare', 'json-schema/lib/valida
 				definition['default'] = jsDefinition['default'];
 			}
 		}
-		return declare(Model, {
-			schema: modelSchema
-		});
+
+		return modelSchema;
 	};
 });
