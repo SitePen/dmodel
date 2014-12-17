@@ -752,7 +752,7 @@ define([
 			return this.name in this._parent._getValues();
 		},
 		_getValues: function () {
-			return this._get();
+			return this._get() || this;
 		},
 		setValue: function (value, parent) {
 			parent._getValues()[this.name] = value;
