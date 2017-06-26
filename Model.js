@@ -453,8 +453,7 @@ define([
 					reactive.value = listener(this.valueOf());
 				}
 			}
-		    // add to the listeners
-            // NOTE - handle is a modification of the original source code - added second parameter 'oldValue'
+			// add to the listeners
 			var handle = this._addListener(function (value, oldValue, propertyName) {
 				var result = listener(value, oldValue, propertyName);
 				if (reactive) {
@@ -534,7 +533,7 @@ define([
 				// notify listeners
 				if (property.onchange) {
 					// queue the callback
-				    property._queueChange(property.onchange, oldValue, property.name);
+					property._queueChange(property.onchange, oldValue, property.name);
 				}
 				// if this was set to an object (or was an object), we need to notify.
 				// update all the sub-property objects, so they can possibly notify their
