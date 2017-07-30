@@ -454,8 +454,8 @@ define([
 				}
 			}
 			// add to the listeners
-			var handle = this._addListener(function (value) {
-				var result = listener(value);
+			var handle = this._addListener(function (value, oldValue, propertyName) {
+				var result = listener(value, oldValue, propertyName);
 				if (reactive) {
 					// TODO: once we have a real notification API again, call that, instead 
 					// of requesting a change
@@ -533,7 +533,7 @@ define([
 				// notify listeners
 				if (property.onchange) {
 					// queue the callback
-					property._queueChange(property.onchange, oldValue);
+					property._queueChange(property.onchange, oldValue, property.name);
 				}
 				// if this was set to an object (or was an object), we need to notify.
 				// update all the sub-property objects, so they can possibly notify their
@@ -563,7 +563,7 @@ define([
 						var subProperty = property._properties && property._properties[key];
 						if (subProperty && subProperty.onchange) {
 							// queue the callback
-							subProperty._queueChange(subProperty.onchange, change.old);
+							subProperty._queueChange(subProperty.onchange, change.old, subProperty.name);
 						}
 					}
 				}
@@ -669,7 +669,7 @@ define([
 				return true;
 			});
 		},
-		_queueChange: function (callback, oldValue) {
+		_queueChange: function (callback, oldValue, propertyName) {
 			// queue up a notification callback
 			if (!callback._queued) {
 				// make sure we only queue up once before it is called by flagging it
@@ -679,7 +679,7 @@ define([
 				// and provide the correct args
 				var dispatch = function () {
 					callback._queued = false;
-					callback.call(reactive, reactive._get(), oldValue);
+					callback.call(reactive, reactive._get(), oldValue, propertyName);
 				};
 
 				if (callbackQueue) {
