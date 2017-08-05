@@ -3,7 +3,7 @@
 dmodel provides robust data modeling capabilities for managing individual objects themselves. dmodel provides a data model class that includes multiple methods on data objects, for saving, validating, and monitoring objects for changes.
 
 dmodel can be used with [dstore](https://github.com/SitePen/dstore), such that objects that are returned from a store (whether it be from iterating over a collection, or performing a get()) can be set to be
-an instance of the store's data model by setting the `model` property of the store to a model class, such as `dmodel/Model`. 
+an instance of the store's data model by setting the `Model` property of the store to a model class, such as `dmodel/Model`. 
 With this setting, the objects are instances of this model, and they all inherit the following properties and methods:
 
 ### Property Summary
@@ -96,7 +96,7 @@ Here is an example of creating a model using a schema:
 We can then define our model as the model to be used for a store:
 
     myStore = new Rest({
-        model: MyModel
+        Model: MyModel
     });
 
 It is important to note that each store should have its own distinct model class.
@@ -195,7 +195,7 @@ Models can be defined through [JSON Schema](http://json-schema.org/) (v3). A sto
 
     define(['dmodel/extensions/jsonSchema', ...], function (jsonSchema, ...) {
         var myStore = new Memory({
-            model: jsonSchema({
+            Model: jsonSchema({
                 properties: {
                     someProperty: {
                         type: "number",
