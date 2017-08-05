@@ -6,25 +6,28 @@ define([
 	'dojo/_base/declare',
 	'dstore/Memory',
 	'dmodel/store/Validating',
-	'dmodel/extensions/jsonSchema'
-], function (registerSuite, assert, lang, JSON, declare, Memory, Validating, jsonSchema) {
+	'dmodel/extensions/jsonSchema',
+	'dmodel/Model'
+], function (registerSuite, assert, lang, JSON, declare, Memory, Validating, jsonSchema, Model) {
 
 	var validatingMemory = (declare([Memory, Validating]))({
-		Model: jsonSchema({
-			properties: {
-				prime: {
-					type: 'boolean'
-				},
-				number: {
-					type: 'number',
-					minimum: 1,
-					maximum: 10
-				},
-				name: {
-					type: 'string',
-					required: true
+		Model: Model.createSubclass({
+			schema: jsonSchema({
+				properties: {
+					prime: {
+						type: 'boolean'
+					},
+					number: {
+						type: 'number',
+						minimum: 1,
+						maximum: 10
+					},
+					name: {
+						type: 'string',
+						required: true
+					}
 				}
-			}
+			})
 		})
 	});
 	validatingMemory.setData([
@@ -52,7 +55,7 @@ define([
 			four.set('number', 3);
 			assert.strictEqual(four.property('number').get('errors'), undefined);
 		},
-		
+
 		'put update': function () {
 			var four = lang.delegate(validatingMemory.getSync(4));
 			four.prime = 'not a boolean';
