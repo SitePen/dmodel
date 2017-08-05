@@ -25,7 +25,7 @@ define([
 		// handling to the property definitions objects.
 		var hasOwnPropertyInstance,
 			property = object.hasOwnProperty('_properties') && object._properties[key];
-		
+
 		hasOwnPropertyInstance = property;
 
 		if (!property) {
@@ -104,7 +104,7 @@ define([
 		//		A base class for modelled data objects.
 
 		//	schema: Object | dstore/Property
-		//		A hash map where the key corresponds to a property definition. 
+		//		A hash map where the key corresponds to a property definition.
 		//		This can be a string corresponding to a JavaScript
 		//		primitive values (string, number, boolean), a constructor, a
 		//		null (to allow any type), or a Property object with more advanced
@@ -112,7 +112,7 @@ define([
 		schema: {},
 
 		//	additionalProperties: boolean
-		//		This indicates whether properties are allowed that are not 
+		//		This indicates whether properties are allowed that are not
 		//		defined in the schema.
 		additionalProperties: true,
 
@@ -142,7 +142,7 @@ define([
 					values[key] = typeof defaultValue === 'function' ? defaultValue.call(this) : defaultValue;
 				}
 			}
-			
+
 		},
 
 		_setValues: function (values) {
@@ -438,7 +438,7 @@ define([
 			//		If this is true, it won't call the listener for the current value,
 			//		just future updates. If this is true, it also won't return
 			//		a new reactive object
-			
+
 			var reactive;
 			if (typeof listener === 'string') {
 				// a property key was provided, use the Model's method
@@ -457,7 +457,7 @@ define([
 			var handle = this._addListener(function (value, oldValue, propertyName) {
 				var result = listener(value, oldValue, propertyName);
 				if (reactive) {
-					// TODO: once we have a real notification API again, call that, instead 
+					// TODO: once we have a real notification API again, call that, instead
 					// of requesting a change
 					reactive.put(result);
 				}
@@ -474,7 +474,7 @@ define([
 		//		Indicates whether or not to perform validation when properties
 		//		are modified.
 		//		This can provided immediate feedback and on the success
-		//		or failure of a property modification. And Invalid property 
+		//		or failure of a property modification. And Invalid property
 		//		values will be rejected. However, if you are
 		//		using asynchronous validation, invalid property values will still
 		//		be set.
@@ -624,7 +624,7 @@ define([
 				(this.type === typeof value))) {
 				errors.push(value + ' is not a ' + this.type);
 			}
-			
+
 			if (this.required && !(value != null && value !== '')) {
 				errors.push('required, and it was not present');
 			}
@@ -750,6 +750,9 @@ define([
 		},
 		_has: function () {
 			return this.name in this._parent._getValues();
+		},
+		_getValues: function () {
+			return this._get() || this;
 		},
 		setValue: function (value, parent) {
 			parent._getValues()[this.name] = value;
